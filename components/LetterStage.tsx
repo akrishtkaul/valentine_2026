@@ -28,19 +28,23 @@ interface LetterStageProps {
 export default function LetterStage({ letterStep }: LetterStageProps) {
   return (
     <div className="text-center z-10 w-full flex items-center justify-center px-4">
-      <div className="relative max-w-2xl w-full overflow-hidden rounded-3xl p-12 sm:p-16 shadow-2xl bg-white/70 backdrop-blur-xl border border-white/40">
-        {/* soft glow */}
-        <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-pink-300/40 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-red-300/40 blur-3xl" />
-
-        <div className="relative space-y-6">
-          {/* letter header decoration */}
-          <div className="flex justify-center mb-8">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-red-400 to-transparent" />
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+      `}</style>
+      
+      <div className="relative max-w-2xl w-full p-8 sm:p-12" style={{
+        border: '4px solid #ff10f0',
+        boxShadow: 'inset 0 0 0 2px #00ffff, 0 0 20px rgba(255, 16, 240, 0.5)',
+        backgroundColor: '#000',
+      }}>
+        <div className="relative space-y-4">
+          <div className="text-center mb-8">
+            <div className="font-['Press_Start_2P'] text-xs text-[#00ff00]">
+              ▓▓▓ LETTER ▓▓▓
+            </div>
           </div>
 
-          {/* letter content */}
-          <div className="space-y-4 min-h-96">
+          <div className="space-y-3 min-h-96">
             {LETTER_LINES.map((line, idx) => (
               <div
                 key={idx}
@@ -49,9 +53,9 @@ export default function LetterStage({ letterStep }: LetterStageProps) {
                 }`}
               >
                 {line === '' ? (
-                  <div className="h-3" />
+                  <div className="h-2" />
                 ) : (
-                  <p className="text-lg sm:text-xl text-gray-800 font-medium leading-relaxed">
+                  <p className="font-['Press_Start_2P'] text-[10px] sm:text-xs text-[#00ffff] leading-relaxed">
                     {line}
                   </p>
                 )}
@@ -59,9 +63,10 @@ export default function LetterStage({ letterStep }: LetterStageProps) {
             ))}
           </div>
 
-          {/* letter footer decoration */}
-          <div className="flex justify-center mt-8">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-red-400 to-transparent" />
+          <div className="text-center mt-8">
+            <div className="font-['Press_Start_2P'] text-[8px] text-[#ffff00] animate-pulse">
+              [ CONTINUE ]
+            </div>
           </div>
         </div>
       </div>

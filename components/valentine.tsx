@@ -78,11 +78,11 @@ export default function Valentine() {
   };
 
   const noMessages = [
-    "That's the wrong answer! 😘",
-    "Come on, really? 🥺",
-    "You're breaking my heart... 💔",
-    "Please reconsider... 🥺💕",
-    "Last chance! 😭",
+    "WRONG ANSWER! 😘",
+    "TRY AGAIN! 🥺",
+    "GAME OVER? 💔",
+    "LAST LIFE! 🥺💕",
+    "FINAL ATTEMPT! 😭",
   ];
 
   const yesFontSize = Math.min(16 + noCount * 8, 48);
@@ -90,29 +90,81 @@ export default function Valentine() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-pink-200 via-red-100 to-pink-300 flex items-center justify-center p-4 relative overflow-hidden"
-      onClick={handleStartAudio}
+      className="min-h-screen bg-black p-4 relative overflow-hidden flex items-center justify-center"
+      style={{
+        backgroundImage: `
+          linear-gradient(0deg, transparent 24%, rgba(255, 16, 240, 0.05) 25%, rgba(255, 16, 240, 0.05) 26%, transparent 27%, transparent 74%, rgba(255, 16, 240, 0.05) 75%, rgba(255, 16, 240, 0.05) 76%, transparent 77%, transparent),
+          linear-gradient(90deg, transparent 24%, rgba(255, 16, 240, 0.05) 25%, rgba(255, 16, 240, 0.05) 26%, transparent 27%, transparent 74%, rgba(255, 16, 240, 0.05) 75%, rgba(255, 16, 240, 0.05) 76%, transparent 77%, transparent)
+        `,
+        backgroundSize: '50px 50px',
+      }}
     >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        .pixel-text {
+          font-family: 'Press Start 2P', cursive;
+          image-rendering: pixelated;
+          image-rendering: crisp-edges;
+        }
+        
+        .pixel-border {
+          border: 4px solid #ff10f0;
+          box-shadow: inset 0 0 0 2px #00ffff;
+        }
+        
+        .pixel-button {
+          font-family: 'Press Start 2P', cursive;
+          border: 3px solid currentColor;
+          box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+          transition: all 0.1s;
+        }
+        
+        .pixel-button:hover {
+          transform: translate(-2px, -2px);
+          box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .pixel-button:active {
+          transform: translate(1px, 1px);
+          box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes scan {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        
+        .scanline {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(255, 16, 240, 0.3);
+          animation: scan 8s linear infinite;
+          pointer-events: none;
+          z-index: 50;
+        }
+      `}</style>
+      
+      <div className="scanline" />
       <audio ref={audioRef} src="/grentperez.mp3" loop preload="auto" />
       <FloatingHearts />
 
       {stage === 'initial' && (
         <div className="text-center cursor-pointer z-10" onClick={handleInitialClick}>
-          <div className="relative max-w-lg w-full overflow-hidden rounded-3xl p-10 sm:p-12 shadow-2xl bg-white/70 backdrop-blur-xl border border-white/40">
-            <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-pink-300/40 blur-3xl" />
-            <div className="absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-red-300/40 blur-3xl" />
-
-            <div className="relative">
-              <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-6">
-                <span className="text-4xl">💌</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                Important Question
-              </h1>
-              <p className="mt-3 text-lg sm:text-xl text-gray-700">
-                The person who sent you this has a really important question to ask...
-              </p>
-              <p className="mt-6 text-sm text-gray-600">Click anywhere to continue</p>
+          <div className="pixel-border bg-black p-8 sm:p-12 max-w-lg w-full relative">
+            <div className="pixel-text text-xl sm:text-2xl text-[#00ffff] mb-6 leading-relaxed">
+              ▓▓▓ QUEST START ▓▓▓
+            </div>
+            <div className="pixel-text text-xs sm:text-sm text-[#ff10f0] mb-6 leading-loose">
+              Someone has sent you<br/>
+              A special message<br/>
+              Will you accept?
+            </div>
+            <div className="pixel-text text-[10px] text-[#00ff00] animate-pulse">
+              [ PRESS SPACE OR CLICK ]
             </div>
           </div>
         </div>
@@ -121,140 +173,116 @@ export default function Valentine() {
       {stage === 'letter' && <LetterStage letterStep={letterStep} />}
 
       {stage === 'question' && (
-        <div className="text-center z-10">
-          <div className="mb-12 animate-fade-in">
-            <h2 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
-              {recipientLine} 💕
-            </h2>
-            <p className="text-3xl font-semibold text-white drop-shadow-lg">
+        <div className="text-center z-10 w-full px-4">
+          <div className="mb-8 pixel-border bg-black p-8 max-w-2xl mx-auto">
+            <div className="pixel-text text-sm sm:text-lg text-[#ff10f0] mb-4 leading-loose">
+              FINAL BOSS QUESTION
+            </div>
+            <div className="pixel-text text-xs text-[#00ffff] leading-loose">
               Will you be my Valentine?
-            </p>
+            </div>
           </div>
 
-          <div className="flex items-center justify-center gap-12 h-32">
+          <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap">
             <button
               onClick={handleYes}
-              style={{ fontSize: `${yesFontSize}px` }}
-              className="bg-[#FFB6C1] hover:bg-[#FF69B4] text-white font-bold py-4 px-8 rounded-lg transition-all duration-200 transform hover:scale-110 whitespace-nowrap shadow-lg"
+              style={{ fontSize: `${Math.min(yesFontSize, 24)}px` }}
+              className="pixel-button bg-[#00ff00] text-black font-bold py-3 px-4 sm:py-4 sm:px-6 whitespace-nowrap"
             >
-              Yes ❤️
+              YES ❤️
             </button>
 
             <div
               style={{ transform: `translate(${noPosition.x}px, ${noPosition.y}px)` }}
-              className="transition-transform duration-200"
+              className="transition-transform duration-150"
             >
               <button
                 onClick={handleNo}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-lg whitespace-nowrap shadow-lg"
+                className="pixel-button bg-[#ff10f0] text-black font-bold py-3 px-4 sm:py-4 sm:px-6 whitespace-nowrap"
               >
-                No 💔
+                NO 💔
               </button>
             </div>
           </div>
 
           {noCount > 0 && (
-            <p className="text-white font-semibold mt-6 text-lg drop-shadow-lg animate-bounce">
-              {noMessages[noCount - 1]}
-            </p>
+            <div className="mt-8 pixel-border bg-black p-4 max-w-xl mx-auto">
+              <p className="pixel-text text-[10px] sm:text-xs text-[#ffff00] animate-pulse">
+                {noMessages[noCount - 1]}
+              </p>
+            </div>
           )}
         </div>
       )}
 
       {stage === 'fine' && (
-        <div className="text-center z-10 w-full flex items-center justify-center px-4">
-          <div className="relative max-w-lg w-full overflow-hidden rounded-3xl p-10 sm:p-12 shadow-2xl bg-white/70 backdrop-blur-xl border border-white/40">
-            <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-pink-300/40 blur-3xl" />
-            <div className="absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-red-300/40 blur-3xl" />
+        <div className="text-center z-10 w-full px-4">
+          <div className="pixel-border bg-black p-8 sm:p-12 max-w-xl mx-auto">
+            <div className="pixel-text text-lg sm:text-2xl text-[#ffff00] mb-6 leading-loose">
+              GAME OVER
+            </div>
+            <div className="pixel-text text-xs text-[#00ffff] mb-8 leading-loose">
+              You have defeated me<br/>
+              I give up 😭
+            </div>
 
-            <div className="relative">
-              <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-6">
-                <span className="text-4xl">😭</span>
-              </div>
+            <div className="flex flex-col gap-3 justify-center">
+              <button
+                onClick={handleReplay}
+                className="pixel-button bg-[#ff10f0] text-black font-bold py-3 px-4"
+              >
+                TRY AGAIN
+              </button>
 
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                OK FINE
-              </h1>
-
-              <p className="mt-3 text-lg sm:text-xl text-gray-700">
-                You win. I give up. 😭
-              </p>
-
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={handleReplay}
-                  className="px-6 py-3 rounded-xl font-semibold bg-gray-900 text-white hover:bg-gray-800 transition"
-                >
-                  Try Again 😈
-                </button>
-
-                <button
-                  onClick={handleYes}
-                  className="px-6 py-3 rounded-xl font-semibold bg-red-500 text-white hover:bg-red-600 transition"
-                >
-                  Fine, Yes 💘
-                </button>
-              </div>
+              <button
+                onClick={handleYes}
+                className="pixel-button bg-[#00ff00] text-black font-bold py-3 px-4"
+              >
+                FINE YES 💘
+              </button>
             </div>
           </div>
         </div>
       )}
 
       {stage === 'yes' && (
-        <div className="text-center z-10 w-full flex items-center justify-center px-4">
-          <div className="relative max-w-lg w-full overflow-hidden rounded-3xl p-10 sm:p-12 shadow-2xl bg-white/70 backdrop-blur-xl border border-white/40">
-            <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-pink-300/40 blur-3xl" />
-            <div className="absolute -bottom-24 -right-24 h-56 w-56 rounded-full bg-red-300/40 blur-3xl" />
+        <div className="text-center z-10 w-full px-4">
+          <div className="pixel-border bg-black p-8 sm:p-12 max-w-xl mx-auto">
+            <div className="pixel-text text-lg sm:text-2xl text-[#00ff00] mb-6 leading-loose">
+              YOU WIN!
+            </div>
+            <div className="pixel-text text-xs text-[#00ffff] mb-8 leading-loose">
+              Level Complete 💞<br/>
+              Date: FEB 14 2026
+            </div>
 
-            <div className="relative">
-              <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-6">
-                <span className="text-4xl">💘</span>
+            <div className="flex flex-col gap-3 justify-center mb-8">
+              <button
+                onClick={handleReplay}
+                className="pixel-button bg-[#ff10f0] text-black font-bold py-3 px-4"
+              >
+                REPLAY
+              </button>
+
+              <button
+                onClick={() => setShowScript(true)}
+                className="pixel-button bg-[#00ff00] text-black font-bold py-3 px-4"
+              >
+                SEND TEXT
+              </button>
+            </div>
+
+            {showScript && (
+              <div className="pixel-border bg-black text-[#00ff00] p-4 text-left text-[8px] sm:text-[10px] font-mono">
+                <p className="mb-2">$ TEXT TO: AKRISHT</p>
+                <p className="text-[#ffff00]">&gt; Akrisht, I&apos;d love to be</p>
+                <p className="text-[#ffff00]">&gt; your Valentine! You&apos;re</p>
+                <p className="text-[#ffff00]">&gt; the best player 2 ever.&quot;</p>
               </div>
+            )}
 
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                It’s a date.
-              </h1>
-
-              <p className="mt-3 text-lg sm:text-xl text-gray-700">
-                You just made my whole week. 💞
-              </p>
-
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={handleReplay}
-                  className="px-6 py-3 rounded-xl font-semibold bg-gray-900 text-white hover:bg-gray-800 transition"
-                >
-                  Replay 😈
-                </button>
-
-                <button
-                  onClick={() => setShowScript(true)}
-                  className="px-6 py-3 rounded-xl font-semibold bg-red-500 text-white hover:bg-red-600 transition"
-                >
-                  Text me “Yes” 💬
-                </button>
-              </div>
-
-              {showScript && (
-                <div className="mt-6 rounded-2xl bg-black/80 text-rose-100 p-4 text-left text-sm sm:text-base font-mono shadow-lg border border-white/10">
-                  <p className="text-rose-200">$ echo &quot;Text this to Akrisht Kaul:&quot;</p>
-                  <p className="mt-2">
-                    <span className="text-rose-200">$ </span>
-                    <span className="text-rose-50">
-                      echo &quot;Akrisht Kaul, aka the best boyfriend in the whole wide world, I&apos;d love to be your valentine.&quot;
-                    </span>
-                  </p>
-                </div>
-              )}
-
-              <div className="mt-10 flex items-center justify-center gap-3 text-3xl">
-                <span className="animate-bounce [animation-delay:0ms]">💗</span>
-                <span className="animate-bounce [animation-delay:120ms]">💞</span>
-                <span className="animate-bounce [animation-delay:240ms]">💓</span>
-                <span className="animate-bounce [animation-delay:360ms]">💖</span>
-              </div>
-
-              <p className="mt-6 text-sm text-gray-600">(You can’t take it back now.)</p>
+            <div className="mt-8 pixel-text text-xs text-[#ff10f0] animate-pulse">
+              ★ CONGRATULATIONS ★
             </div>
           </div>
         </div>
