@@ -164,7 +164,7 @@ export default function Valentine() {
               Will you accept?
             </div>
             <div className="pixel-text text-[10px] text-[#00ff00] animate-pulse">
-              [ PRESS SPACE OR CLICK ]
+              [ CLICK ANYWHERE TO BEGIN ]
             </div>
           </div>
         </div>
